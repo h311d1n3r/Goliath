@@ -83,10 +83,6 @@ if __name__ == '__main__':
     if not args.version:
         logging.fatal('Syntax: goliath version')
         sys.exit(1)
-    goroot = os.getenv('GOROOT')
-    if goroot is None:
-        logging.fatal('Environment variable GOROOT is not set. Please install and setup go correctly then retry.')
-        sys.exit(1)
     if not download_and_extract_version(args.version):
         sys.exit(1)
     if not patch(args.version):
