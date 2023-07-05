@@ -1,2 +1,2 @@
 # Goliath
-Golang patcher that prevents deadcode elimination
+Go compiler patcher that prevents deadcode elimination
