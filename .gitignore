@@ -1,0 +1,7 @@
+__pycache__/
+.goliath*/
+*.spec
+build/
+dist/
+target/
+*.lock
