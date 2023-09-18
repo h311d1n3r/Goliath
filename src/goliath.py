@@ -63,6 +63,29 @@ def patch(version):
             deadcode_f.write('\t}\n\n')
         deadcode_f.write(line+'\n')
     deadcode_f.close()
+    if os.path.exists(work_dir+'/src/cmd/link/internal/ld/stackcheck.go'):
+        stackcheck_f = open(work_dir+'/src/cmd/link/internal/ld/stackcheck.go', 'r')
+        lines = stackcheck_f.read()
+        stackcheck_f.close()
+        stackcheck_f = open(work_dir+'/src/cmd/link/internal/ld/stackcheck.go', 'w')
+        for line in lines.split('\n'):
+            if 'limit :=' in line:
+                stackcheck_f.write('\tlimit := 0xFFFFFFFF\n')
+            else:
+                stackcheck_f.write(line+'\n')
+        stackcheck_f.close()
+    if os.path.exists(work_dir+'/src/cmd/link/internal/ld/lib.go'):
+        lib_f = open(work_dir+'/src/cmd/link/internal/ld/lib.go', 'r')
+        lines = lib_f.read()
+        lib_f.close()
+        lib_f = open(work_dir+'/src/cmd/link/internal/ld/lib.go', 'w')
+        for line in lines.split('\n'):
+            if 'func (sc *stkChk) check' in line:
+                lib_f.write(line+'\n')
+                lib_f.write('\treturn 0\n')
+            else:
+                lib_f.write(line+'\n')
+        lib_f.close()
     return True
 
 def build(version):
